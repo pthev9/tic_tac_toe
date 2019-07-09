@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -30,4 +30,71 @@
   to {
     transform: rotate(360deg);
   }
+} */
+.header{
+  background-color: skyblue;
+  padding: 1em;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+
+}
+.all-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+  height: 100%;
+}
+.all-square {
+  margin: 4px;
+  background-color: skyblue;
+  width: 20%;
+  padding: 5px;
+  text-align: center;
+}
+.players {
+}
+.all-square-done {
+  margin: 4px;
+  background-color: lightgreen;
+  width: 20%;
+  padding: 5px;
+  text-align: center;
+}
+.all-square-playing{
+  margin: 4px;
+  background-color: lightgrey;
+  width: 20%;
+  padding: 5px;
+  text-align: center;
+}
+.game-field {
+  margin: auto;
+  width: 60%;
+}
+.game-square {
+  float:left;
+  position: relative;
+  width: 30%;
+  padding-bottom : 30%;
+  margin: 1.66%;
+  background-color: lightgrey;
+
+}
+.cross{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-image: url("https://image.flaticon.com/icons/svg/579/579006.svg");
+}
+.null {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-image: url("https://image.flaticon.com/icons/svg/390/390933.svg");
+}
+.button {
+}
+.inputname {
+
 }
