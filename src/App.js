@@ -1,51 +1,21 @@
 import React, {Component} from 'react';
 import './App.css';
-import Game from "./Game"
-import GamesList from "./GamesList"
-import responseGamesList from "./responseGamesList"
+import Main from "./Main";
+import Game from "./Game";
+import GamesList from "./GamesList";
+import GameActive from "./GameActive";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-class App extends Component {
-  constructor(){
-    super();
-    this.State ={
-      games: []
-    }
-  }
-  componentDidMount(){
-    this.setState({games: responseGamesList});
-  }
-
-
+export default class App extends Component {
   render(){
-    let state = this.State.games;
     return (
-      <div className="App">
-
-        <header className="header">Крестики Нолики</header>
-
-        <div className="main">
-
-          <input
-            className="input-name"
-            type="text"
-            placeholder="Enter name"/>
-          <button
-            className="button"
-            onClick={this.createNewGame}>
-            Create new game</button>
-          <GamesList />
-
-        </div>
-
-      </div>
-    );
+      <Router>
+        <Route path="/" component={Main} />
+        <Route path="/gameslist" component={GamesList}/>
+        <Route path="/game" component={Game}/>
+        <Route path="/game/:gameToken" component={GameActive}/>
+        <Link to="/gameslist">GamesList</Link>
+      </Router>
+    )
   }
-  // function createNewGame() {
-  //   let newPlayer = document.querySelector('.input-name').value;
-  //   let arrNewPlayer = {userName: newPlayer, fieldSize: 3};
-  //   let result = state.concat(arrNewPlayer);
-  //   console.log(result);
-  // }
 }
-
-export default App;
