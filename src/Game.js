@@ -1,6 +1,8 @@
 import React, {Component} from "react";
+import LocalStorage from "./LocalStorage";
 
 export default class Game extends Component {
+  gameToken;
   constructor(props) {
     super(props)
     this.state = {
@@ -14,16 +16,14 @@ export default class Game extends Component {
         opponent: ""
       }
     };
+    this.storage = new LocalStorage();
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.selectSquare = this.selectSquare.bind(this);
   }
 
   gameDataRefresh () {
-    let games = localStorage.getItem("games");
-    games = JSON.parse(games);
-    let gameData = games.find(
-      game => game.gameToken === this.props.match.params.gameToken
-    );
+    let gameToken = this.props.match.params.gameToken;
+    let gameData = this.storage.getGameData(gameToken);
     this.setState({game: gameData});
   }
 
@@ -41,13 +41,13 @@ export default class Game extends Component {
   }
 
   render(){
-    let data = this.state.game;
+    let gameData = this.state.game;
     let gameField = this.state.game.gameField;
     return (
       <div>
         <div>
-          <div className="player-first"  >{data.owner}</div>
-          <div className="player-second" >{data.opponent}</div>
+          <div className="player-first"  >{gameData.owner}</div>
+          <div className="player-second" >{gameData.opponent}</div>
         </div>
         <div className="game-field">
           {gameField.map((row, index) =>(
@@ -59,7 +59,7 @@ export default class Game extends Component {
             />
           ))}
         </div>
-        <div className="timer">{data.gameDuration}</div>
+        <div className="timer">{gameData.gameDuration}</div>
       </div>
     )
   }

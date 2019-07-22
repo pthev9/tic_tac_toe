@@ -1,5 +1,6 @@
 import React from 'react';
 import {Redirect} from "react-router-dom";
+import LocalStorage from "./LocalStorage";
 
 export default class GamesList extends React.Component {
   constructor() {
@@ -8,6 +9,7 @@ export default class GamesList extends React.Component {
       games: [],
       redirect: false
     }
+    this.storage = new LocalStorage();
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.userNameChange = this.userNameChange.bind(this);
     this.createNewGame = this.createNewGame.bind(this);
@@ -19,14 +21,14 @@ export default class GamesList extends React.Component {
       let gameToken = this.state.username.replace(/\s+/g, '') + Date.now();
       console.log(gameToken);
       let newGame = {
-        gameToken: gameToken,
-        owner: this.state.username,
-        opponent: "",
-        size: 3,
+        gameToken:    gameToken,
+        owner:        this.state.username,
+        opponent:     "",
+        size:         3,
         gameDuration: 0,
-        gameResult: "" ,
-        state: "ready",
-        turn: "owner",
+        gameResult:   "" ,
+        state:        "ready",
+        turn:         "owner",
         gameField: [
           [0, 0, 0],
           [0, 0, 0],
@@ -34,20 +36,14 @@ export default class GamesList extends React.Component {
         ]
       }
       this.setState({gameToken: gameToken, redirect: true})
-      let games = localStorage.getItem("games");
-      games = JSON.parse(games);
-      games = games.concat(newGame);
-      games = JSON.stringify(games);
-      localStorage.setItem("games", games);
-
+      this.storage.pushData(newGame);
     }
     else alert("Enter name");
   }
 
   gameDataRefresh() {
-    let games = localStorage.getItem("games");
-    games = JSON.parse(games);
-    this.setState({games: games});
+    let gamesData = this.storage.getData()
+    this.setState({games: gamesData});
   }
 
   // componentWillUnmout(){
