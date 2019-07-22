@@ -1,5 +1,4 @@
 import React from 'react';
-// import responseGamesList from "./responseGamesList";
 import {Redirect} from "react-router-dom";
 
 export default class GamesList extends React.Component {
@@ -12,13 +11,15 @@ export default class GamesList extends React.Component {
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.userNameChange = this.userNameChange.bind(this);
     this.createNewGame = this.createNewGame.bind(this);
-    this._isMounted = false;
+    // this._isMounted = false;
+
   }
   createNewGame() {
     if(this.state.username) {
       let gameToken = this.state.username.replace(/\s+/g, '') + Date.now();
       console.log(gameToken);
-      let newGame = {gameToken: gameToken,
+      let newGame = {
+        gameToken: gameToken,
         owner: this.state.username,
         opponent: "",
         size: 3,
@@ -26,7 +27,11 @@ export default class GamesList extends React.Component {
         gameResult: "" ,
         state: "ready",
         turn: "owner",
-        gameField: [1,0,0,0,0,0,0,0,2]
+        gameField: [
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]
+        ]
       }
       this.setState({gameToken: gameToken, redirect: true})
       let games = localStorage.getItem("games");
@@ -38,31 +43,27 @@ export default class GamesList extends React.Component {
     }
     else alert("Enter name");
   }
+
   gameDataRefresh() {
     let games = localStorage.getItem("games");
     games = JSON.parse(games);
-      // console.log(games);
     this.setState({games: games});
   }
 
+  // componentWillUnmout(){
+  // this._isMounted = false;
+  // }
+
   componentDidMount() {
-    this._isMounted = true;
+    // this._isMounted = true;
     setInterval(this.gameDataRefresh, 5000);
   }
-  componentWillUnmount() {
-   this._isMounted = false;
-  }
+
   userNameChange(event) {
     this.setState({username: event.target.value});
   }
+
   render(){
-    // let games = responseGamesList;
-    // games = JSON.stringify(games);
-    // localStorage.setItem("games", games);
-    // let games = localStorage.getItem("games");
-    // games = JSON.parse(games);
-
-
     if (this.state.redirect) {
       let path = "/game/" + this.state.gameToken;
       return (<Redirect to={path}/>)
@@ -89,15 +90,14 @@ export default class GamesList extends React.Component {
               (square, index) =>(
                 <div
                   key={index}
-                  className="all-square"
-                  state={square.state}
+                  className={`all-square ${square.state}`}
                   onClick={()=>{
                     this.setState({gameToken: square.gameToken, redirect: true});
                   }}
                 >
                   <div className="player">{square.owner}</div>
                   <div className="player">{square.opponent}</div>
-                  <div className="time">{square.gameDuration}</div>
+                  <div className="timer">{square.gameDuration}</div>
                 </div>
               )
             )}

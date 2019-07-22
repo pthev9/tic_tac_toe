@@ -48,13 +48,18 @@
 
 .all-square {
   margin: 4px;
-  background-color: skyblue;
+  background-color: deepskyblue;
   width: 19%;
   padding: 5px;
   text-align: center;
 }
-
-.all-square-done {
+.playing {
+  background-color: skyblue;
+}
+.done {
+  background-color: powderblue;
+}
+/* .all-square-done {
   margin: 4px;
   background-color: lightgreen;
   width: 20%;
@@ -68,7 +73,7 @@
   width: 20%;
   padding: 5px;
   text-align: center;
-}
+} */
 
 .game-field {
   margin: auto;

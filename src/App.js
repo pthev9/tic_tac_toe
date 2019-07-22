@@ -3,7 +3,6 @@ import './App.css';
 import Main from "./Main";
 import Game from "./Game";
 import GamesList from "./GamesList";
-// import GameActive from "./GameActive";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default class App extends Component {

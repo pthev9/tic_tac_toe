@@ -9,7 +9,11 @@ const responseGamesList = [
       state: "ready",
       // "ready” || "playing” || "done”
       turn: "owner",
-      gameField: [0,1,2,0,0,0,0,1,1]
+      gameField: [
+        [0, 1, 1],
+        [2, 0, 1],
+        [2, 2, 0]
+      ]
     },
     {gameToken: "1abc",
       owner: "Vasy",
@@ -18,7 +22,11 @@ const responseGamesList = [
       gameDuration: 9323,
       gameResult: "" ,
       state: "playing",
-      gameField: [0,0,0,0,0,0,1,1,2]
+      gameField: [
+        [0, 1, 1],
+        [2, 0, 1],
+        [2, 2, 0]
+      ]
     },
     {gameToken: "2abc",
       owner: "Sasha",
@@ -27,7 +35,11 @@ const responseGamesList = [
       gameDuration: 12323,
       gameResult: "owner" ,
       state: "done",
-      gameField: [0,0,0,0,0,0,0,1,2]
+      gameField: [
+        [0, 1, 1],
+        [2, 0, 1],
+        [2, 2, 0]
+      ]
     },
     {gameToken: "3abc",
       owner: "Chuck Norris",
@@ -36,7 +48,11 @@ const responseGamesList = [
       gameDuration: 0,
       gameResult: "" ,
       state: "ready",
-      gameField: [0,0,0,0,0,0,0,1,2]
+      gameField: [
+        [0, 1, 1],
+        [2, 0, 1],
+        [2, 2, 0]
+      ]
     },
     {gameToken: "4abc",
       owner: "Vasy",
@@ -45,7 +61,11 @@ const responseGamesList = [
       gameDuration: 9323,
       gameResult: "" ,
       state: "playing",
-      gameField: [0,0,0,0,0,0,0,1,2]
+      gameField: [
+        [0, 1, 1],
+        [2, 0, 1],
+        [2, 2, 0]
+      ]
     },
     {gameToken: "5abc",
       owner: "Sasha",
@@ -54,7 +74,11 @@ const responseGamesList = [
       gameDuration: 12323,
       gameResult: "owner" ,
       state: "done",
-      gameField: [0,0,0,0,0,0,0,1,2]
+      gameField: [
+        [0, 1, 1],
+        [2, 0, 1],
+        [2, 2, 0]
+      ]
     }
   ];
 
