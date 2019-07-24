@@ -4,11 +4,11 @@ export default class LocalStorage {
     return gamesData;
   }
 
-  pushData(newData) {
+  pushData(newGameData) {
     let gamesData = JSON.parse(localStorage.getItem("games"));
-    let updatedData = gamesData.concat(newData);
-    updatedData = JSON.stringify(updatedData);
-    localStorage.setItem("games", updatedData);
+    gamesData = gamesData.concat(newGameData);
+    gamesData = JSON.stringify(gamesData);
+    localStorage.setItem("games", gamesData);
   }
 
   getGameData (initialGameToken ) {
@@ -16,5 +16,9 @@ export default class LocalStorage {
     return gamesData.find(
       game => game.gameToken === initialGameToken
     );
+  }
+  updateGameData(updatedGameData){
+    let updatedData = JSON.stringify(updatedGameData);
+    localStorage.setItem("games", updatedData);
   }
 }

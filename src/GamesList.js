@@ -52,11 +52,47 @@ export default class GamesList extends React.Component {
 
   componentDidMount() {
     // this._isMounted = true;
-    setInterval(this.gameDataRefresh, 5000);
+    setInterval(this.gameDataRefresh, 1000);
   }
 
   userNameChange(event) {
     this.setState({username: event.target.value});
+  }
+
+  joiningObserver(game){
+    // this.setState({gameToken: game.gameToken, redirect: true});
+  }
+
+  joiningPlayer(game) {
+    if(this.state.username) {
+      // game.state = "playing";
+      // game.opponent = this.state.username;
+      // this.setState({game.state: "playing", game.opponent: this.state.username});
+      console.log(game);
+      console.log(this.state.games);
+      this.setState({
+        gameToken: game.gameToken + "/" + this.state.username ,
+        redirect: true
+      });
+    }
+    else alert("Enter name");
+  }
+
+  selectGame(game){
+    switch(game.state) {
+      case "ready":
+        this.joiningPlayer(game);
+        break;
+      case "playing":
+        this.joiningObserver(game);
+        break;
+      case "done":
+        alert("this game is over");
+        break;
+      default:
+        console.log("something goes wrong");
+    }
+
   }
 
   render(){
@@ -83,17 +119,15 @@ export default class GamesList extends React.Component {
           </button>
           <div className="all-list">
             {games.map(
-              (square, index) =>(
+              (game, index) =>(
                 <div
                   key={index}
-                  className={`all-square ${square.state}`}
-                  onClick={()=>{
-                    this.setState({gameToken: square.gameToken, redirect: true});
-                  }}
+                  className={`all-square ${game.state}`}
+                  onClick={() => this.selectGame(game)}
                 >
-                  <div className="player">{square.owner}</div>
-                  <div className="player">{square.opponent}</div>
-                  <div className="timer">{square.gameDuration}</div>
+                  <div className="player">{game.owner}</div>
+                  <div className="player">{game.opponent}</div>
+                  <div className="timer">{game.gameDuration}</div>
                 </div>
               )
             )}
