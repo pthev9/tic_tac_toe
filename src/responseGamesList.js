@@ -22,6 +22,7 @@ const responseGamesList = [
       gameDuration: 9323,
       gameResult: "" ,
       state: "playing",
+      turn: "owner",
       gameField: [
         [0, 1, 1],
         [2, 0, 1],
@@ -35,6 +36,7 @@ const responseGamesList = [
       gameDuration: 12323,
       gameResult: "owner" ,
       state: "done",
+      turn: "owner",
       gameField: [
         [0, 1, 1],
         [2, 0, 1],
@@ -48,6 +50,7 @@ const responseGamesList = [
       gameDuration: 0,
       gameResult: "" ,
       state: "ready",
+      turn: "owner",
       gameField: [
         [0, 1, 1],
         [2, 0, 1],
@@ -61,6 +64,7 @@ const responseGamesList = [
       gameDuration: 9323,
       gameResult: "" ,
       state: "playing",
+      turn: "owner",
       gameField: [
         [0, 1, 1],
         [2, 0, 1],
@@ -74,6 +78,7 @@ const responseGamesList = [
       gameDuration: 12323,
       gameResult: "owner" ,
       state: "done",
+      turn: "owner",
       gameField: [
         [0, 1, 1],
         [2, 0, 1],

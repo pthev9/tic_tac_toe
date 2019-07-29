@@ -13,9 +13,9 @@ export default class GamesList extends React.Component {
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.userNameChange = this.userNameChange.bind(this);
     this.createNewGame = this.createNewGame.bind(this);
-    // this._isMounted = false;
-
+    this._isMounted = false;
   }
+
   createNewGame() {
     if(this.state.username) {
       let gameToken = this.state.username.replace(/\s+/g, '') + Date.now();
@@ -26,7 +26,7 @@ export default class GamesList extends React.Component {
         opponent:     "",
         size:         3,
         gameDuration: 0,
-        gameResult:   "" ,
+        gameResult:   "",
         state:        "ready",
         turn:         "owner",
         gameField: [
@@ -36,7 +36,7 @@ export default class GamesList extends React.Component {
         ]
       }
       this.setState({gameToken: gameToken, redirect: true})
-      this.storage.pushData(newGame);
+      this.storage.pushData(newGame)
     }
     else alert("Enter name");
   }
@@ -46,12 +46,12 @@ export default class GamesList extends React.Component {
     this.setState({games: gamesData});
   }
 
-  // componentWillUnmout(){
-  // this._isMounted = false;
-  // }
+  componentWillUnmout(){
+  this._isMounted = false;
+  }
 
   componentDidMount() {
-    // this._isMounted = true;
+    this._isMounted = true;
     setInterval(this.gameDataRefresh, 1000);
   }
 
@@ -60,16 +60,14 @@ export default class GamesList extends React.Component {
   }
 
   joiningObserver(game){
-    // this.setState({gameToken: game.gameToken, redirect: true});
+    this.setState({
+      gameToken: game.gameToken + "/observer",
+      redirect: true
+    });
   }
 
   joiningPlayer(game) {
     if(this.state.username) {
-      // game.state = "playing";
-      // game.opponent = this.state.username;
-      // this.setState({game.state: "playing", game.opponent: this.state.username});
-      console.log(game);
-      console.log(this.state.games);
       this.setState({
         gameToken: game.gameToken + "/" + this.state.username ,
         redirect: true

@@ -15,23 +15,23 @@ export default class Game extends Component {
         owner: "",
         opponent: ""
       },
-      timer: false
+      timer: false,
+      redirect: false
     };
-    // if (this.props.match.params.secondplayer) {
-    //   this.setState({
-    //     game.state: "playing",
-    //     game.opponent: this.props.match.params.secondplayer
-    //   });
-    // }
     this.storage = new LocalStorage();
 
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.selectSquare = this.selectSquare.bind(this);
+    // this._isMounted = false;
   }
 
   gameDataRefresh () {
     let gameToken = this.props.match.params.gameToken;
     let gameData = this.storage.getGameData(gameToken);
+
+    if (this.props.match.params.secondplayer === "observer"){
+      console.log("you watching");
+    }
     if (this.props.match.params.secondplayer && !gameData.opponent) {
         gameData.state = "playing";
         gameData.opponent = this.props.match.params.secondplayer;
@@ -42,7 +42,7 @@ export default class Game extends Component {
     this.setState({ game: gameData });
     let gamesData = JSON.parse(localStorage.getItem("games"));
     let gameIndex = gamesData.findIndex(
-      game => game.gameToken === this.props.match.params.gameToken
+      game => game.gameToken === gameToken
     );
     gamesData[gameIndex] = gameData;
     gamesData = JSON.stringify(gamesData);
@@ -50,28 +50,45 @@ export default class Game extends Component {
   }
 
   componentDidMount() {
+    // this._isMounted = true;
     setInterval(this.gameDataRefresh, 5000)
   }
 
+  // componentWillUnmout(){
+  // this._isMounted = false;
+  // }
+
   selectSquare(row, col) {
-    console.log(row, col);
+    if(!this.state.game.gameField[row][col]) {
+      if(this.state.game.gameDuration === 0){
+        this.setState({timer: true});
+      }
+      if(this.state.game.turn === "owner"){
+        let gamesData = JSON.parse(localStorage.getItem("games"));
+        let gameIndex = gamesData.findIndex(
+          game => game.gameToken === this.props.match.params.gameToken
+        );
+        let game = gamesData[gameIndex];
+        game.gameField[row][col] = 1;
+        game.turn = "opponent";
+        gamesData[gameIndex] = game;
+        gamesData = JSON.stringify(gamesData);
+        localStorage.setItem("games", gamesData);
+      }
 
-    if(this.state.game.gameDuration === 0){
-      this.setState({timer: true});
+      if(this.state.game.turn === "opponent"){
+        let gamesData = JSON.parse(localStorage.getItem("games"));
+        let gameIndex = gamesData.findIndex(
+          game => game.gameToken === this.props.match.params.gameToken
+        );
+        let game = gamesData[gameIndex];
+        game.gameField[row][col] = 2;
+        game.turn = "owner";
+        gamesData[gameIndex] = game;
+        gamesData = JSON.stringify(gamesData);
+        localStorage.setItem("games", gamesData);
+      }
     }
-
-    if(this.state.game.turn === "owner"){
-      // this.setState({ game: gameField[row][col]})
-      console.log("turn: owner")
-    }
-    if(this.state.game.turn === "opponent"){
-     console.log("turn: opponent")
-    }
-    // let games = localStorage.getItem("games");
-    // games = JSON.parse(games);
-    // games = games.concat(newGame);
-    // games = JSON.stringify(games);
-    // localStorage.setItem("games", games);
   }
 
   timerSetup(time) {
@@ -99,7 +116,6 @@ export default class Game extends Component {
                 selectSquare={this.selectSquare}
               />
             ))}
-
           </div>
         </div>
         <div className="timer" >{this.timerSetup(this.state.game.gameDuration)}</div>
