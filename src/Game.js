@@ -39,7 +39,7 @@ export default class Game extends Component {
     if(this.state.timer || this.state.game.gameDuration) {
       gameData.gameDuration = gameData.gameDuration + 1000;
     }
-    this.setState({ game: gameData });
+    this.setState({ game: gameData, turnChanged: false });
     let gamesData = JSON.parse(localStorage.getItem("games"));
     let gameIndex = gamesData.findIndex(
       game => game.gameToken === gameToken
@@ -60,10 +60,16 @@ export default class Game extends Component {
 
   selectSquare(row, col) {
     if(!this.state.game.gameField[row][col]) {
-      if(this.state.game.gameDuration === 0){
+      if(this.state.game.gameDuration === 0 && this.state.game.turn === "owner") {
         this.setState({timer: true});
       }
-      if(this.state.game.turn === "owner"){
+
+      if(this.props.match.params.secondplayer === "observer"){
+        return false;
+      }
+
+      if(this.state.game.turn === "owner" && !this.props.match.params.secondplayer && !this.state.turnChanged) {
+        this.setState({turnChanged: true});
         let gamesData = JSON.parse(localStorage.getItem("games"));
         let gameIndex = gamesData.findIndex(
           game => game.gameToken === this.props.match.params.gameToken
@@ -76,7 +82,8 @@ export default class Game extends Component {
         localStorage.setItem("games", gamesData);
       }
 
-      if(this.state.game.turn === "opponent"){
+      if(this.state.game.turn === "opponent" && this.props.match.params.secondplayer && !this.state.turnChanged) {
+        this.setState({turnChanged: true});
         let gamesData = JSON.parse(localStorage.getItem("games"));
         let gameIndex = gamesData.findIndex(
           game => game.gameToken === this.props.match.params.gameToken
@@ -88,13 +95,14 @@ export default class Game extends Component {
         gamesData = JSON.stringify(gamesData);
         localStorage.setItem("games", gamesData);
       }
+
     }
   }
 
   timerSetup(time) {
     let sec =(time % 60000)/1000;
     let min = (time - 1000 * sec)/60000;
-     return (min + " : " + sec);
+     return ("0" + min + " : " + sec);
   }
 
   render(){
