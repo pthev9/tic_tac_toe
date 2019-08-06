@@ -58,8 +58,8 @@ export default class Game extends Component {
   // this._isMounted = false;
   // }
 
-  selectSquare(row, col) {
-    if(!this.state.game.gameField[row][col]) {
+  selectSquare(row, column) {
+    if(!this.state.game.gameField[row][column]) {
       if(this.state.game.gameDuration === 0 && this.state.game.turn === "owner") {
         this.setState({timer: true});
       }
@@ -75,7 +75,7 @@ export default class Game extends Component {
           game => game.gameToken === this.props.match.params.gameToken
         );
         let game = gamesData[gameIndex];
-        game.gameField[row][col] = 1;
+        game.gameField[row][column] = 1;
         game.turn = "opponent";
         gamesData[gameIndex] = game;
         gamesData = JSON.stringify(gamesData);
@@ -89,7 +89,7 @@ export default class Game extends Component {
           game => game.gameToken === this.props.match.params.gameToken
         );
         let game = gamesData[gameIndex];
-        game.gameField[row][col] = 2;
+        game.gameField[row][column] = 2;
         game.turn = "owner";
         gamesData[gameIndex] = game;
         gamesData = JSON.stringify(gamesData);
