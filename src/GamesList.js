@@ -42,8 +42,10 @@ export default class GamesList extends React.Component {
   }
 
   gameDataRefresh() {
-    let gamesData = this.storage.getData()
-    this.setState({games: gamesData});
+    let gamesData = this.storage.getData();
+    if (gamesData) {
+      this.setState({games: gamesData});
+    }
   }
 
   componentWillUnmout(){
@@ -52,7 +54,7 @@ export default class GamesList extends React.Component {
 
   componentDidMount() {
     this._isMounted = true;
-    setInterval(this.gameDataRefresh, 1000);
+    setInterval(this.gameDataRefresh, 2000);
   }
 
   userNameChange(event) {

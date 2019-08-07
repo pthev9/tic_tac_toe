@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import LocalStorage from "./LocalStorage";
+import CheckEndGame from "./CheckEndGame";
 
 export default class Game extends Component {
   gameToken;
@@ -19,7 +20,7 @@ export default class Game extends Component {
       redirect: false
     };
     this.storage = new LocalStorage();
-
+    this.checkEndGame = new CheckEndGame();
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.selectSquare = this.selectSquare.bind(this);
     // this._isMounted = false;
@@ -59,8 +60,8 @@ export default class Game extends Component {
   // }
 
   selectSquare(row, column) {
-    if(!this.state.game.gameField[row][column]) {
-      if(this.state.game.gameDuration === 0 && this.state.game.turn === "owner") {
+    if (!this.state.game.gameField[row][column]) {
+      if (this.state.game.gameDuration === 0 && this.state.game.turn === "owner") {
         this.setState({timer: true});
       }
 
@@ -68,7 +69,10 @@ export default class Game extends Component {
         return false;
       }
 
-      if(this.state.game.turn === "owner" && !this.props.match.params.secondplayer && !this.state.turnChanged) {
+      if (
+      this.state.game.turn === "owner" &&
+      !this.props.match.params.secondplayer &&
+      !this.state.turnChanged) {
         this.setState({turnChanged: true});
         let gamesData = JSON.parse(localStorage.getItem("games"));
         let gameIndex = gamesData.findIndex(
@@ -76,13 +80,17 @@ export default class Game extends Component {
         );
         let game = gamesData[gameIndex];
         game.gameField[row][column] = 1;
+        this.checkEndGame.checkEndGame(game.gameField);
         game.turn = "opponent";
         gamesData[gameIndex] = game;
         gamesData = JSON.stringify(gamesData);
         localStorage.setItem("games", gamesData);
       }
 
-      if(this.state.game.turn === "opponent" && this.props.match.params.secondplayer && !this.state.turnChanged) {
+      if (
+      this.state.game.turn === "opponent" &&
+      this.props.match.params.secondplayer &&
+      !this.state.turnChanged) {
         this.setState({turnChanged: true});
         let gamesData = JSON.parse(localStorage.getItem("games"));
         let gameIndex = gamesData.findIndex(
@@ -90,6 +98,7 @@ export default class Game extends Component {
         );
         let game = gamesData[gameIndex];
         game.gameField[row][column] = 2;
+        this.checkEndGame.checkEndGame(game.gameField);
         game.turn = "owner";
         gamesData[gameIndex] = game;
         gamesData = JSON.stringify(gamesData);
