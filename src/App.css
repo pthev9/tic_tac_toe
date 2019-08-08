@@ -1,37 +1,3 @@
-/* .App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
 .header{
   background-color: skyblue;
   padding: 1em;
@@ -60,21 +26,6 @@
 .done {
   background-color: powderblue;
 }
-/* .all-square-done {
-  margin: 4px;
-  background-color: lightgreen;
-  width: 20%;
-  padding: 5px;
-  text-align: center;
-}
-
-.all-square-playing{
-  margin: 4px;
-  background-color: lightgrey;
-  width: 20%;
-  padding: 5px;
-  text-align: center;
-} */
 
 .game-field {
   margin: auto;
@@ -104,7 +55,14 @@
   background-image: url("https://image.flaticon.com/icons/svg/390/390933.svg");
 }
 
+.player-first {
+  margin-left: 20px;
+  text-align: left;
+  float: left;
+}
 .player-second {
+  margin-right: 20px;
+  text-align: right;
   float: right;
 }
 .timer{
@@ -112,5 +70,14 @@
   text-align: center;
 }
 .field-block {
+  margin-top: 20px;
   display: flex;
+}
+
+.exit-button {
+  display: block;
+  margin-top: 10px;
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
 }

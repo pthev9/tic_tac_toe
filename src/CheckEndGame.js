@@ -4,7 +4,7 @@ export default class CheckEndGame {
     let winner = this.checkOnWinner(cellsArray) ||
                  this.checkOnWinner(this.getColumns(cellsArray)) ||
                  this.checkOnWinner(this.getDiagonals(cellsArray));
-    console.log(winner + " is Winner!");
+    return winner;
   }
 
   getColumns (cellsArray) {
@@ -32,6 +32,9 @@ export default class CheckEndGame {
     let winner;
     for (let i = 0; i < cellsArray.length; i++) {
       let firstCell = cellsArray[i][0];
+      if (firstCell === 0) {
+        break;
+      }
       if (cellsArray[i].every(value => value === firstCell) === true) {
         winner = firstCell;
       }
@@ -39,8 +42,8 @@ export default class CheckEndGame {
     return winner;
   }
 
-  checkNoWays(cellsArray) {
-    let gameFieldToString = cellsArray.join(',');
+  checkNoWays(gameField) {
+    let gameFieldToString = gameField.join(',');
     return !gameFieldToString.includes(0);
   }
 }

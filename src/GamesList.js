@@ -1,6 +1,6 @@
 import React from 'react';
 import {Redirect} from "react-router-dom";
-import LocalStorage from "./LocalStorage";
+import Games from "./LocalStorage/Games";
 
 export default class GamesList extends React.Component {
   constructor() {
@@ -9,7 +9,7 @@ export default class GamesList extends React.Component {
       games: [],
       redirect: false
     }
-    this.storage = new LocalStorage();
+    this.storage = new Games();
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.userNameChange = this.userNameChange.bind(this);
     this.createNewGame = this.createNewGame.bind(this);
@@ -35,16 +35,17 @@ export default class GamesList extends React.Component {
           [0, 0, 0]
         ]
       }
-      this.setState({gameToken: gameToken, redirect: true})
-      this.storage.pushData(newGame)
+      this.setState({gameToken: gameToken, redirect: true});
+      let games = this.storage.getAll();
+      this.storage.pushNew(games, newGame);
     }
     else alert("Enter name");
   }
 
   gameDataRefresh() {
-    let gamesData = this.storage.getData();
-    if (gamesData) {
-      this.setState({games: gamesData});
+    let games = this.storage.getAll();
+    if (games) {
+      this.setState({games: games});
     }
   }
 
@@ -90,9 +91,8 @@ export default class GamesList extends React.Component {
         alert("this game is over");
         break;
       default:
-        console.log("something goes wrong");
+        console.log("game.state undefined");
     }
-
   }
 
   render(){
