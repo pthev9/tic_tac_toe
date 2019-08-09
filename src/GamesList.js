@@ -19,7 +19,7 @@ export default class GamesList extends React.Component {
   createNewGame() {
     if(this.state.username) {
       let gameToken = this.state.username.replace(/\s+/g, '') + Date.now();
-      console.log(gameToken);
+      console.log("gameToken: " + gameToken);
       let newGame = {
         gameToken:    gameToken,
         owner:        this.state.username,
@@ -44,9 +44,7 @@ export default class GamesList extends React.Component {
 
   gameDataRefresh() {
     let games = this.storage.getAll();
-    if (games) {
-      this.setState({games: games});
-    }
+    this.setState({games: games});
   }
 
   componentWillUnmout(){
@@ -103,6 +101,23 @@ export default class GamesList extends React.Component {
 
     else {
       let games = this.state.games;
+      if (!games) return (
+        <div>
+          <input
+            className="input-name"
+            type="text"
+            placeholder="Enter name"
+            onChange={this.userNameChange}
+          />
+          <button
+            className="button"
+            onClick={this.createNewGame}
+          >
+          Create new game
+          </button>
+          <h1> No games </h1>
+        </div>
+      )
       return (
         <div>
           <input

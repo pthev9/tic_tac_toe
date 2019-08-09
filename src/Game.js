@@ -17,22 +17,29 @@ export default class Game extends Component {
         owner: "",
         opponent: ""
       },
-      timer: false,
+      timeCounter: "",
       redirect: false,
       turnChanged: false
     };
     this.storage = new Games();
     this.endGame = new CheckEndGame();
+    this.timer = this.timer.bind(this);
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.selectSquare = this.selectSquare.bind(this);
-    this._isMounted = false;
+    // this._isMounted = false;
   }
 
   gameDataRefresh() {
-    let gameToken = this.props.match.params.gameToken;
-    let games = this.storage.getAll();
-    let gameIndex = this.storage.getActiveIndex(games, gameToken);
-    let game = games[gameIndex];
+    if (this.state.game.state === "done") {
+      clearInterval(this.state.timeCounter);
+      return false;
+    }
+    let games, game, gameToken, gameIndex;
+    gameToken = this.props.match.params.gameToken;
+    games = this.storage.getAll();
+    gameIndex = this.storage.getActiveIndex(games, gameToken);
+    game = games[gameIndex];
+
     if (this.props.match.params.secondplayer === "observer"){
       console.log("you watching");
     }
@@ -42,22 +49,33 @@ export default class Game extends Component {
       game.opponent = this.props.match.params.secondplayer;
     }
 
-    if (this.state.timer || this.state.game.gameDuration) {
-      game.gameDuration = game.gameDuration + 1000;
-    }
-
     this.setState({ game: game, turnChanged: false });
-    games[gameIndex] = game;
+
+    games[gameIndex] = game
     this.storage.update(games);
   }
 
   componentDidMount() {
-    this._isMounted = true;
-    setInterval(this.gameDataRefresh, 5000)
+    // this._isMounted = true;
+    setInterval(this.gameDataRefresh, 1000);
   }
 
-  componentWillUnmout(){
-  this._isMounted = false;
+  // componentWillUnmout(){
+  // this._isMounted = false;
+  // }
+
+  timer() {
+    let games, game, gameIndex;
+    let gameToken = this.props.match.params.gameToken;
+    games = this.storage.getAll();
+    gameIndex = this.storage.getActiveIndex(games, gameToken);
+    game = games[gameIndex];
+
+    game.gameDuration += 1000;
+    console.log(game.gameDuration);
+
+    games[gameIndex] = game
+    this.storage.update(games);
   }
 
   selectSquare(row, column) {
@@ -65,19 +83,23 @@ export default class Game extends Component {
     let secondPlayer = this.props.match.params.secondplayer;
     if (!this.state.game.gameField[row][column] &&
         !this.state.turnChanged &&
-        !this.state.game.gameResult) {
+        !this.state.game.gameResult &&
+        this.state.game.opponent) {
 
-      if (this.state.game.gameDuration === 0 && turn === "owner") {
-        this.setState({timer: true});
+      if (this.state.game.gameDuration === 0 &&
+          this.state.game.turn === "owner") {
+            let timeCounter = setInterval(this.timer, 1000);
+            this.setState({timeCounter: timeCounter});
       }
 
       if (this.props.match.params.secondplayer === "observer"){
         return false;
       }
+      let games, game, gameIndex;
       let gameToken = this.props.match.params.gameToken;
-      let games = this.storage.getAll();
-      let gameIndex = this.storage.getActiveIndex(games, gameToken);
-      let game = games[gameIndex];
+      games = this.storage.getAll();
+      gameIndex = this.storage.getActiveIndex(games, gameToken);
+      game = games[gameIndex];
 
       let firstPlayerMove = !secondPlayer && turn === "owner";
       let secondPlayerMove = secondPlayer && turn === "opponent";
@@ -102,8 +124,10 @@ export default class Game extends Component {
         }
       let noWays = this.endGame.checkNoWays(game.gameField);
       if (noWays) {game.gameResult = "draw"; alert("Draw!")};
-      if (winner || noWays) {game.state = "done";}
-      games[gameIndex] = game;
+      if (winner || noWays) {
+        game.state = "done";
+      }
+      games[gameIndex] = game
       this.storage.update(games);
     }
   }
@@ -119,7 +143,7 @@ export default class Game extends Component {
       this.setState({redirect: true});
       return false;
     }
-    if (game.turn === "owner") {
+    if (game.turn === "opponent") {
       game.gameResult = "opponent";
     }
     else {
@@ -155,8 +179,10 @@ export default class Game extends Component {
             ))}
           </div>
         </div>
-        <div className="timer" >{this.timerSetup(this.state.game.gameDuration)}</div>
-        <button className="exit-button" onClick={() => this.exitGame(game)}>Surrender</button>
+        <div className="timer" >{this.timerSetup(game.gameDuration)}</div>
+        <button className="exit-button"
+                onClick={() => this.exitGame(game)}
+        > Surrender </button>
       </div>
     )
   }

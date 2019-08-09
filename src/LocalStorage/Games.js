@@ -6,21 +6,19 @@ export default class Games {
   }
 
   pushNew(games, newGame) {
-    if (games) {
-      games = games.concat(newGame);
-      games = JSON.stringify(games);
-      localStorage.setItem("games", games);
+    if (!games) {
+      games = [];
     }
-    else {
-      games = JSON.stringify(newGame);
-      localStorage.setItem("games", games);
-    }
+    games.push(newGame);
+    games = JSON.stringify(games);
+    localStorage.setItem("games", games);
   }
 
-  getActive(games, gameToken) {
-    let gameData = games.find(game => game.gameToken === gameToken);
-    return gameData;
-  }
+  // getActive(games, gameToken) {
+  //   if (!games) {return};
+  //   let gameData = games.find(game => game.gameToken === gameToken);
+  //   return gameData;
+  // }
 
   update(updatedGameData) {
     let updatedData = JSON.stringify(updatedGameData);
@@ -28,6 +26,7 @@ export default class Games {
   }
 
   getActiveIndex(games, gameToken) {
+    if (!games) {return};
     let gameIndex = games.findIndex(game => game.gameToken === gameToken);
     return gameIndex;
   }
