@@ -1,0 +1,57 @@
+.player-first {
+  margin-left: 20px;
+  text-align: left;
+  float: left;
+}
+
+.player-second {
+  margin-right: 20px;
+  text-align: right;
+  float: right;
+}
+
+.field-block {
+  margin-top: 20px;
+  display: flex;
+}
+
+.game-field {
+  margin: auto;
+  width: 50%;
+}
+
+.game-square {
+  float:left;
+  position: relative;
+  width: 30%;
+  padding-bottom : 30%;
+  margin: 1.66%;
+  background-color: lightgrey;
+}
+
+.cross{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-image: url("https://image.flaticon.com/icons/svg/579/579006.svg");
+}
+
+.null {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-image: url("https://image.flaticon.com/icons/svg/390/390933.svg");
+}
+
+.timer{
+  margin-top: 10px;
+  text-align: center;
+}
+
+.exit-button {
+  display: block;
+  margin-top: 10px;
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
+}

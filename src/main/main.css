@@ -1,0 +1,28 @@
+.all-list {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  /* align-content: stretch; */
+  /* height: 500px; */
+}
+
+.all-square {
+  margin: 4px;
+  background-color: deepskyblue;
+  width: 19%;
+  padding: 5px;
+  text-align: center;
+  /* height: 100%; */
+}
+
+.playing {
+  background-color: skyblue;
+}
+
+.done {
+  background-color: powderblue;
+}
+
+.winner {
+
+}

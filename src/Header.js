@@ -1,5 +1,7 @@
 import React from 'react';
+import "./Header.css";
 import responseGamesList from "./responseGamesList";
+
 
 function pushLocalStorage() {
   let games = JSON.stringify(responseGamesList);
@@ -12,7 +14,7 @@ function resetLocalStorage() {
   console.log("localStorage cleared!")
 }
 
-function Main () {
+function Header() {
   return (
     <div>
       <header className="header">Крестики Нолики</header>
@@ -23,4 +25,4 @@ function Main () {
   )
 }
 
-export default Main;
+export default Header;

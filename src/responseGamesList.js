@@ -3,13 +3,13 @@ const responseGamesList = [
       owner: "Chuck Norris",
       opponent: "",
       size: 3,
-      gameDuration: 0,
-      gameResult: "" ,
+      duration: 0,
+      result: "" ,
       // "owner” || "opponent” || "draw”
       state: "ready",
       // "ready” || "playing” || "done”
       turn: "owner",
-      gameField: [
+      field: [
         [0, 1, 1],
         [2, 0, 1],
         [2, 2, 0]
@@ -19,11 +19,11 @@ const responseGamesList = [
       owner: "Vasy",
       opponent: "Pety",
       size: 3,
-      gameDuration: 9323,
-      gameResult: "" ,
+      duration: 9323,
+      result: "" ,
       state: "playing",
       turn: "owner",
-      gameField: [
+      field: [
         [0, 1, 1],
         [2, 0, 1],
         [2, 2, 0]
@@ -33,11 +33,11 @@ const responseGamesList = [
       owner: "Sasha",
       opponent: "Masha",
       size: 3,
-      gameDuration: 12323,
-      gameResult: "owner" ,
+      duration: 12323,
+      result: "owner" ,
       state: "done",
       turn: "owner",
-      gameField: [
+      field: [
         [0, 1, 1],
         [2, 0, 1],
         [2, 2, 0]
@@ -47,11 +47,11 @@ const responseGamesList = [
       owner: "Chuck Norris",
       opponent: "",
       size: 3,
-      gameDuration: 0,
-      gameResult: "" ,
+      duration: 0,
+      result: "" ,
       state: "ready",
       turn: "owner",
-      gameField: [
+      field: [
         [0, 1, 1],
         [2, 0, 1],
         [2, 2, 0]
@@ -61,11 +61,11 @@ const responseGamesList = [
       owner: "Vasy",
       opponent: "Pety",
       size: 3,
-      gameDuration: 9323,
-      gameResult: "" ,
+      duration: 9323,
+      result: "" ,
       state: "playing",
       turn: "owner",
-      gameField: [
+      field: [
         [0, 1, 1],
         [2, 0, 1],
         [2, 2, 0]
@@ -75,11 +75,11 @@ const responseGamesList = [
       owner: "Sasha",
       opponent: "Masha",
       size: 3,
-      gameDuration: 12323,
-      gameResult: "owner" ,
+      duration: 12323,
+      result: "owner" ,
       state: "done",
       turn: "owner",
-      gameField: [
+      field: [
         [0, 1, 1],
         [2, 0, 1],
         [2, 2, 0]

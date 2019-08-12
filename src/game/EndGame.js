@@ -1,6 +1,6 @@
-export default class CheckEndGame {
-  checkEndGame(gameField){
-    let cellsArray = gameField;
+export default class EndGame {
+  getWinner(field){
+    let cellsArray = field;
     let winner = this.checkOnWinner(cellsArray) ||
                  this.checkOnWinner(this.getColumns(cellsArray)) ||
                  this.checkOnWinner(this.getDiagonals(cellsArray));
@@ -42,8 +42,8 @@ export default class CheckEndGame {
     return winner;
   }
 
-  checkNoWays(gameField) {
-    let gameFieldToString = gameField.join(',');
-    return !gameFieldToString.includes(0);
+  checkNoWays(field) {
+    let fieldToString = field.join(',');
+    return !fieldToString.includes(0);
   }
 }
