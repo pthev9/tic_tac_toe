@@ -50,8 +50,13 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-    setInterval(this.refreshListOfGames.bind(this), 2000);
+    this.refreshList = setInterval(() => this.refreshListOfGames(), 2000);
   }
+  // Doesn't work
+  // componentWillUnmout() {
+  //   clearInterval(this.refreshList);
+  //   console.log("component unloaded");
+  // }
 
   selectGame(game){
     switch(game.state) {
@@ -91,6 +96,7 @@ export default class Main extends Component {
     let list;
 
     if (this.state.redirect) {
+      clearInterval(this.refreshList);
       let path = "/game/" + this.state.gameToken;
       return (<Redirect to={path}/>)
     }

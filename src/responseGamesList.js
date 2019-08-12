@@ -10,16 +10,16 @@ const responseGamesList = [
       // "ready” || "playing” || "done”
       turn: "owner",
       field: [
-        [0, 1, 1],
-        [2, 0, 1],
-        [2, 2, 0]
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
       ]
     },
     {gameToken: "1abc",
       owner: "Vasy",
       opponent: "Pety",
       size: 3,
-      duration: 9323,
+      duration: 9000,
       result: "" ,
       state: "playing",
       turn: "owner",
@@ -33,7 +33,7 @@ const responseGamesList = [
       owner: "Sasha",
       opponent: "Masha",
       size: 3,
-      duration: 12323,
+      duration: 12000,
       result: "owner" ,
       state: "done",
       turn: "owner",
@@ -52,16 +52,16 @@ const responseGamesList = [
       state: "ready",
       turn: "owner",
       field: [
-        [0, 1, 1],
-        [2, 0, 1],
-        [2, 2, 0]
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
       ]
     },
     {gameToken: "4abc",
       owner: "Vasy",
       opponent: "Pety",
       size: 3,
-      duration: 9323,
+      duration: 9000,
       result: "" ,
       state: "playing",
       turn: "owner",
@@ -75,7 +75,7 @@ const responseGamesList = [
       owner: "Sasha",
       opponent: "Masha",
       size: 3,
-      duration: 12323,
+      duration: 12000,
       result: "owner" ,
       state: "done",
       turn: "owner",

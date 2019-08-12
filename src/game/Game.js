@@ -27,7 +27,6 @@ export default class Game extends Component {
     this.timer = this.timer.bind(this);
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.selectSquare = this.selectSquare.bind(this);
-    // this._isMounted = false;
   }
 
   gameDataRefresh() {
@@ -57,13 +56,8 @@ export default class Game extends Component {
   }
 
   componentDidMount() {
-    // this._isMounted = true;
-    this.refreshGame = setInterval(this.gameDataRefresh, 1000);
+    this.refreshGame = setInterval(() => this.gameDataRefresh(), 1000);
   }
-
-  // componentWillUnmout(){
-  // this._isMounted = false;
-  // }
 
   timer() {
     let games, game, gameIndex;
@@ -162,6 +156,8 @@ export default class Game extends Component {
 
   render() {
     if (this.state.redirect) {
+      clearInterval(this.refreshList);
+      console.log("component unload");
       return <Redirect to="/"/>
     }
     let game = this.state.game;
@@ -183,9 +179,12 @@ export default class Game extends Component {
           </div>
         </div>
         <div className="timer" >{this.timerSetup(game.duration)}</div>
-        <button className="exit-button"
-                onClick={() => this.exitGame(game)}
-        > Surrender </button>
+        <button
+          className="exit-button"
+          onClick={() => this.exitGame(game)}
+        >
+          Surrender
+        </button>
       </div>
     )
   }
