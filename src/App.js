@@ -10,7 +10,7 @@ export default class App extends Component {
     return (
       <Router>
         <Header/>
-        <Route path="/" component={Main} />
+        <Route exact path="/" component={Main} />
         <Route path="/game/:gameToken/:secondplayer?" component={Game}/>
         <Link to="/">main</Link>
       </Router>
