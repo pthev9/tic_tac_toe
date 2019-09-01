@@ -1,4 +1,4 @@
-const responseGamesList = [
+const initialGamesList = [
     {gameToken: "0abc",
       owner: "Chuck Norris",
       opponent: "",
@@ -87,4 +87,4 @@ const responseGamesList = [
     }
   ];
 
-export default responseGamesList;
+export default initialGamesList;

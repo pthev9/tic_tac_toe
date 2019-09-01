@@ -1,4 +1,4 @@
-export default class Games {
+export default class LocalStorage {
   getAll() {
     let games = localStorage.getItem("games");
     games = JSON.parse(games);
@@ -30,5 +30,4 @@ export default class Games {
     let gameIndex = games.findIndex(game => game.gameToken === gameToken);
     return gameIndex;
   }
-
 }

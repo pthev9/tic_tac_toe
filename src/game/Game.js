@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Games from ".././LocalStorage/Games";
+import LocalStorage from ".././services/LocalStorage";
 import EndGame from "./EndGame";
 import Square from "./Square";
 import Timer from "./Timer";
@@ -25,11 +25,12 @@ export default class Game extends Component {
       redirect: false,
       turnChanged: false
     };
-    this.storage = new Games();
+    this.storage = new LocalStorage();
     this.endGame = new EndGame();
     this.timer = this.timer.bind(this);
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.selectSquare = this.selectSquare.bind(this);
+    const secondPlayer = this.props.match.params.secondplayer;
   }
 
   gameDataRefresh() {
@@ -78,7 +79,7 @@ export default class Game extends Component {
 
   selectSquare(row, column) {
     let turn = this.state.game.turn;
-    let secondPlayer = this.props.match.params.secondplayer;
+    // let secondPlayer = this.props.match.params.secondplayer;
     if (!this.state.game.field[row][column] &&
         !this.state.turnChanged &&
         !this.state.game.result &&
@@ -99,8 +100,8 @@ export default class Game extends Component {
       gameIndex = this.storage.getActiveIndex(games, gameToken);
       game = games[gameIndex];
 
-      let firstPlayerMove = !secondPlayer && turn === "owner";
-      let secondPlayerMove = secondPlayer && turn === "opponent";
+      let firstPlayerMove = !this.secondPlayer && turn === "owner";
+      let secondPlayerMove = this.secondPlayer && turn === "opponent";
         if (firstPlayerMove) {
           this.setState({turnChanged: true});
           game.field[row][column] = 1;
@@ -162,12 +163,14 @@ export default class Game extends Component {
       console.log("component unload");
       return <Redirect to="/"/>
     }
+
     let game = this.state.game;
     let field = this.state.game.field;
+
     return (
       <div>
-        <span className="player-first"  >{game.owner}</span>
-        <span className="player-second" >{game.opponent}</span>
+        <span className="player-first"  > {game.owner} </span>
+        <span className="player-second" > {game.opponent} </span>
         <div className="field-block">
           <div className="game-field">
             {field.map((row, index) =>(

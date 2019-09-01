@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Redirect} from "react-router-dom";
-import Games from ".././LocalStorage/Games";
+import LocalStorage from ".././services/LocalStorage";
 import List from "./List";
 import "./main.css";
 
@@ -12,7 +12,7 @@ export default class Main extends Component {
       redirect: false,
       path: ""
     }
-    this.storage = new Games();
+    this.storage = new LocalStorage();
   }
 
   createNewGame() {

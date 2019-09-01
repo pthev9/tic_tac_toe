@@ -1,10 +1,10 @@
 import React from 'react';
-import "./Header.css";
-import responseGamesList from "./responseGamesList";
+import "./header.css";
+import initialGamesList from "../developmentData/initialGamesList";
 
 
 function pushLocalStorage() {
-  let games = JSON.stringify(responseGamesList);
+  let games = JSON.stringify(initialGamesList);
   localStorage.setItem("games", games);
   console.log("localStorage updated!")
 }
