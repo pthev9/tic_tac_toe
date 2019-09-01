@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Redirect} from "react-router-dom";
 import Games from ".././LocalStorage/Games";
-// import List from "./List";
+import List from "./List";
 import "./main.css";
 
 export default class Main extends Component {
@@ -9,10 +9,10 @@ export default class Main extends Component {
     super()
     this.state = {
       games: [],
-      redirect: false
+      redirect: false,
+      path: ""
     }
     this.storage = new Games();
-    this.createNewGame = this.createNewGame.bind(this);
   }
 
   createNewGame() {
@@ -37,7 +37,7 @@ export default class Main extends Component {
           [0, 0, 0]
         ]
       };
-      this.setState({gameToken: gameToken, redirect: true});
+      this.setState({path: gameToken, redirect: true});
       let games = this.storage.getAll();
       this.storage.pushNew(games, newGame);
     }
@@ -52,11 +52,6 @@ export default class Main extends Component {
   componentDidMount() {
     this.refreshList = setInterval(() => this.refreshListOfGames(), 2000);
   }
-  // Doesn't work
-  // componentWillUnmout() {
-  //   clearInterval(this.refreshList);
-  //   console.log("component unloaded");
-  // }
 
   selectGame(game){
     switch(game.state) {
@@ -70,13 +65,13 @@ export default class Main extends Component {
         alert("this game is over");
         break;
       default:
-        console.log("game.state undefined");
+        console.log("game.state is " + (game.state));
     }
   }
 
   joiningObserver(game){
     this.setState({
-      gameToken: game.gameToken + "/observer",
+      path: game.gameToken + "/observer",
       redirect: true
     });
   }
@@ -84,7 +79,7 @@ export default class Main extends Component {
   joiningPlayer(game) {
     if(this.state.username) {
       this.setState({
-        gameToken: game.gameToken + "/" + this.state.username ,
+        path: game.gameToken + "/" + this.state.username ,
         redirect: true
       });
     }
@@ -93,39 +88,11 @@ export default class Main extends Component {
 
   render() {
     let games = this.state.games;
-    let list;
 
     if (this.state.redirect) {
       clearInterval(this.refreshList);
-      let path = "/game/" + this.state.gameToken;
+      let path = "/game/" + this.state.path;
       return (<Redirect to={path}/>)
-    }
-
-    if (!games) {
-      list = <h1> No games </h1>;
-    }
-    else {
-      list =
-            // <List
-            //     gamesList={this.state.games}
-            //     selectGame={this.selectGame}
-            //  />
-             <div className="all-list">
-               {games.map(
-                 (game, index) =>(
-                   <div
-                     key={index}
-                     className={`all-square ${game.state}`}
-                     onClick={() => this.selectGame(game)}
-                   >
-                     <div className="player">{game.owner}</div>
-                     <div className="player">{game.opponent}</div>
-                     <div className="timer">{game.duration}</div>
-                   </div>
-                 )
-               )}
-             </div>
-
     }
 
     return (
@@ -137,14 +104,24 @@ export default class Main extends Component {
             placeholder="Enter name"
             onChange={(event) => this.setState({username: event.target.value})}
           />
+
           <button
             className="input_button"
-            onClick={this.createNewGame}
+            onClick={this.createNewGame.bind(this)}
           >
             Create new game
           </button>
 
-          {list}
+          {games && (
+            <List
+              gamesList={this.state.games}
+              selectGame={this.selectGame.bind(this)}
+            />
+          )}
+
+          {!games && (
+            <h1> No games </h1>
+          )}
         </div>
       </div>
     )

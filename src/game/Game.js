@@ -1,7 +1,10 @@
 import React, {Component} from "react";
 import Games from ".././LocalStorage/Games";
 import EndGame from "./EndGame";
+import Square from "./Square";
+import Timer from "./Timer";
 import {Redirect} from "react-router-dom";
+
 import "./game.css";
 
 export default class Game extends Component {
@@ -156,7 +159,6 @@ export default class Game extends Component {
 
   render() {
     if (this.state.redirect) {
-      clearInterval(this.refreshList);
       console.log("component unload");
       return <Redirect to="/"/>
     }
@@ -178,7 +180,7 @@ export default class Game extends Component {
             ))}
           </div>
         </div>
-        <div className="timer" >{this.timerSetup(game.duration)}</div>
+        <Timer duration={game.duration} />
         <button
           className="exit-button"
           onClick={() => this.exitGame(game)}
@@ -186,30 +188,6 @@ export default class Game extends Component {
           Surrender
         </button>
       </div>
-    )
-  }
-}
-
-class Square extends Component {
-
-  getSquareFilling(square) {
-    if (square === 1) {
-      return "game-square cross"}
-    if (square === 2) {
-      return "game-square null"}
-    else return "game-square";
-  }
-
-  render() {
-    return (
-      (this.props.row).map((square, index) =>
-        <div
-          key={index}
-          className={this.getSquareFilling(square)}
-          onClick={() => this.props.selectSquare(this.props.rowIndex, index)}
-        >
-        </div>
-      )
     )
   }
 }
