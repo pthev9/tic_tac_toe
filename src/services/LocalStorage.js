@@ -14,12 +14,6 @@ export default class LocalStorage {
     localStorage.setItem("games", games);
   }
 
-  // getActive(games, gameToken) {
-  //   if (!games) {return};
-  //   let gameData = games.find(game => game.gameToken === gameToken);
-  //   return gameData;
-  // }
-
   update(updatedGameData) {
     let updatedData = JSON.stringify(updatedGameData);
     localStorage.setItem("games", updatedData);

@@ -30,7 +30,6 @@ export default class Game extends Component {
     this.timer = this.timer.bind(this);
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
     this.selectSquare = this.selectSquare.bind(this);
-    const secondPlayer = this.props.match.params.secondplayer;
   }
 
   gameDataRefresh() {
@@ -79,12 +78,11 @@ export default class Game extends Component {
 
   selectSquare(row, column) {
     let turn = this.state.game.turn;
-    // let secondPlayer = this.props.match.params.secondplayer;
+    let secondPlayer = this.props.match.params.secondplayer;
     if (!this.state.game.field[row][column] &&
         !this.state.turnChanged &&
         !this.state.game.result &&
         this.state.game.opponent) {
-
       if (this.state.game.duration === 0 &&
           this.state.game.turn === "owner") {
             let timeCounter = setInterval(this.timer, 1000);
@@ -100,8 +98,8 @@ export default class Game extends Component {
       gameIndex = this.storage.getActiveIndex(games, gameToken);
       game = games[gameIndex];
 
-      let firstPlayerMove = !this.secondPlayer && turn === "owner";
-      let secondPlayerMove = this.secondPlayer && turn === "opponent";
+      let firstPlayerMove = !secondPlayer && turn === "owner";
+      let secondPlayerMove = secondPlayer && turn === "opponent";
         if (firstPlayerMove) {
           this.setState({turnChanged: true});
           game.field[row][column] = 1;
@@ -131,12 +129,6 @@ export default class Game extends Component {
     }
   }
 
-  timerSetup(time) {
-    let sec =(time % 60000)/1000;
-    let min = (time - 1000 * sec)/60000;
-     return ("0" + min + " : " + sec);
-  }
-
   exitGame(game) {
     if (this.props.match.params.secondplayer === "observer") {
       clearInterval(this.refreshGame);
@@ -155,6 +147,7 @@ export default class Game extends Component {
     games[gameIndex] = game;
     this.storage.update(games);
     clearInterval(this.refreshGame);
+    clearInterval(this.state.timeCounter);
     this.setState({redirect: true});
   }
 

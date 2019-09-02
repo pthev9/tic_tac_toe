@@ -1,10 +1,6 @@
 import React, {Component} from "react";
 
 export default class Timer extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
   timerSetup() {
     let time = this.props.duration;
     let sec =(time % 60000)/1000;

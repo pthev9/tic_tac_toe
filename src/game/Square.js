@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 
 class Square extends Component {
-
   getSquareFilling(square) {
     if (square === 1) {
       return "game-square cross"}
