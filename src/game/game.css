@@ -10,6 +10,10 @@
   float: right;
 }
 
+.move {
+ text-decoration: underline;
+}
+
 .field-block {
   margin-top: 20px;
   display: flex;

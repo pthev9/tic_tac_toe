@@ -159,11 +159,15 @@ export default class Game extends Component {
 
     let game = this.state.game;
     let field = this.state.game.field;
-
+    let ownerTurn = game.turn === "owner";
     return (
       <div>
-        <span className="player-first"  > {game.owner} </span>
-        <span className="player-second" > {game.opponent} </span>
+        <span className={`player-first ${ownerTurn ? "move" : ""}` } >
+          {game.owner} X
+        </span>
+        <span className={`player-second ${ownerTurn ? "" : "move"}` }>
+          {game.opponent} O
+        </span>
         <div className="field-block">
           <div className="game-field">
             {field.map((row, index) =>(
