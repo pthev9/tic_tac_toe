@@ -22,10 +22,15 @@
 
 .player_first {
   border-bottom-style: groove ;
+  color: white;
 }
 
 .player_second {
+  color: white;
+}
 
+.winner {
+  color: deepskyblue;
 }
 
 .time {

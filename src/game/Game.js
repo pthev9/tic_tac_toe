@@ -162,10 +162,10 @@ export default class Game extends Component {
     let ownerTurn = game.turn === "owner";
     return (
       <div>
-        <span className={`player-first ${ownerTurn ? "move" : ""}` } >
+        <span className={`player-first ${ownerTurn ? "move" : ""}`} >
           {game.owner} X
         </span>
-        <span className={`player-second ${ownerTurn ? "" : "move"}` }>
+        <span className={`player-second ${!ownerTurn ? "move" : ""}`}>
           {game.opponent} O
         </span>
         <div className="field-block">

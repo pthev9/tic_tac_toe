@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-
+import Players from "./Players"
 
 export default class List extends Component {
   // constructor(props){
@@ -16,8 +16,11 @@ export default class List extends Component {
               className={`all-square ${game.state}`}
               onClick={() => this.props.selectGame(game)}
             >
-              <div className="player_first">{game.owner}</div>
-              <div className="player_second">{game.opponent}</div>
+              <Players
+                winner={game.result}
+                owner={game.owner}
+                opponent={game.opponent}
+              />
               <div className="time">{game.duration}</div>
             </div>
           )
