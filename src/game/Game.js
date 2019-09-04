@@ -76,9 +76,15 @@ export default class Game extends Component {
     let game = this.state.game;
     let secondPlayer = this.props.match.params.secondplayer;
     let gameToken = this.props.match.params.gameToken;
+<<<<<<< HEAD
     let playerCanMakeAMove = !game.field[row][column] &&
                              !this.state.turnChanged  &&
                              !game.result             &&
+=======
+    let playerCanMakeAMove = !game.field[row][column]     &&
+                             !this.state.turnChanged &&
+                             !game.result                 &&
+>>>>>>> ecedd7e4e918ed2d82d61737f20f78756507c489
                               game.opponent;
     let gameStart = game.duration === 0 && game.turn === "owner";
 
@@ -94,8 +100,16 @@ export default class Game extends Component {
 
       let [games, gameIndex, game] = this.storage.getActive(gameToken);
       let gameUpdated = game;
+<<<<<<< HEAD
       this.playerMove(row, column, gameUpdated);
       this.checkEndGame(gameUpdated);
+=======
+
+      this.playerMove(row, column, gameUpdated);
+
+      this.checkEndGame(gameUpdated);
+
+>>>>>>> ecedd7e4e918ed2d82d61737f20f78756507c489
       games[gameIndex] = gameUpdated
       this.storage.update(games);
     }
@@ -121,8 +135,11 @@ export default class Game extends Component {
 
   checkEndGame(game) {
     let winner = this.endGame.getWinner(game.field);
+<<<<<<< HEAD
     let noWays = this.endGame.checkNoWays(game.field);
 
+=======
+>>>>>>> ecedd7e4e918ed2d82d61737f20f78756507c489
       if (winner === 1) {
         game.result = "owner";
         alert(game.owner + " is Winner!")
@@ -132,7 +149,13 @@ export default class Game extends Component {
         alert(game.opponent + " is Winner!")
       }
 
+<<<<<<< HEAD
     if (noWays) {game.result = "draw"; alert("Draw!")};
+=======
+    let noWays = this.endGame.checkNoWays(game.field);
+    if (noWays) {game.result = "draw"; alert("Draw!")};
+
+>>>>>>> ecedd7e4e918ed2d82d61737f20f78756507c489
     if (winner || noWays) {
       game.state = "done";
     }
