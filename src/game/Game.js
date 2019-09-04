@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import LocalStorage from ".././services/LocalStorage";
 import EndGame from "./EndGame";
 import Square from "./Square";
+import ExitButton from "./ExitButton";
 import Timer from "./Timer";
 import {Redirect} from "react-router-dom";
 
@@ -181,12 +182,11 @@ export default class Game extends Component {
           </div>
         </div>
         <Timer duration={game.duration} />
-        <button
-          className="exit-button"
-          onClick={() => this.exitGame(game)}
-        >
-          Surrender
-        </button>
+        <ExitButton
+          secondPlayer={this.props.match.params.secondplayer}
+          gameData={game}
+          exitGame={this.exitGame.bind(this)}
+        />
       </div>
     )
   }

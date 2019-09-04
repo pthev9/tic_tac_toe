@@ -2,10 +2,6 @@ import React, {Component} from "react";
 import Players from "./Players"
 
 export default class List extends Component {
-  // constructor(props){
-  //   super(props);
-  // }
-
   render(){
     return (
       <div className="all-list">
