@@ -3,7 +3,7 @@ import LocalStorage from ".././services/LocalStorage";
 import EndGame from "./EndGame";
 import Square from "./Square";
 import ExitButton from "./ExitButton";
-import Timer from "./Timer";
+import Timer from ".././common/Timer";
 import {Redirect} from "react-router-dom";
 
 import "./game.css";
@@ -181,7 +181,10 @@ export default class Game extends Component {
             ))}
           </div>
         </div>
-        <Timer duration={game.duration} />
+        <Timer
+          className="timer-game"
+          duration={game.duration}
+        />
         <ExitButton
           secondPlayer={this.props.match.params.secondplayer}
           gameData={game}

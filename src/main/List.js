@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Players from "./Players"
+import Timer from ".././common/Timer";
 
 export default class List extends Component {
   render(){
@@ -17,7 +18,10 @@ export default class List extends Component {
                 owner={game.owner}
                 opponent={game.opponent}
               />
-              <div className="time">{game.duration}</div>
+              <Timer
+                className="timer-list"
+                duration={game.duration}
+              />
             </div>
           )
         )}

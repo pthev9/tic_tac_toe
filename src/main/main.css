@@ -33,6 +33,8 @@
   color: deepskyblue;
 }
 
-.time {
+.timer-list {
+  font-size: 11px;
+  color: white;
   float: right;
 }
