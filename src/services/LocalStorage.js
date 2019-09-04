@@ -1,4 +1,5 @@
 export default class LocalStorage {
+
   getAll() {
     let games = localStorage.getItem("games");
     games = JSON.parse(games);
@@ -23,5 +24,12 @@ export default class LocalStorage {
     if (!games) {return};
     let gameIndex = games.findIndex(game => game.gameToken === gameToken);
     return gameIndex;
+  }
+
+  getActive(gameToken) {
+    let games = this.getAll();
+    let gameIndex = this.getActiveIndex(games, gameToken);
+    let game = games[gameIndex];
+    return [games, gameIndex, game];
   }
 }
