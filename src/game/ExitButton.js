@@ -3,7 +3,8 @@ import React from "react";
 export default function ExitButton(props) {
   let game = props.gameData;
   let text;
-  if(!game.opponent || props.secondPlayer === "observer") {
+  
+  if (!game.opponent || props.secondPlayer === "observer") {
     text = "Back";
   }
   else

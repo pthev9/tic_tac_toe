@@ -4,7 +4,7 @@ class Square extends Component {
   getSquareFilling(square) {
     if (square === 1) {
       return "game-square cross"}
-    if (square === 2) {
+    else if (square === 2) {
       return "game-square null"}
     else
       return "game-square";

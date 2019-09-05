@@ -39,9 +39,8 @@ export default class Game extends Component {
   gameDataRefresh() {
     let games, gameIndex, game;
     let gameUpdated;
-    let secondPlayerJoined;
-    let gameToken = this.props.match.params.gameToken;
-    let secondPlayer = this.props.match.params.secondPlayer;
+    const gameToken = this.props.match.params.gameToken;
+    const secondPlayer = this.props.match.params.secondPlayer;
 
     if (this.state.game.state === "done") {
       this.gameEndMessage();
@@ -53,7 +52,7 @@ export default class Game extends Component {
     [games, gameIndex, game] = this.storage.getActive(gameToken);
     gameUpdated = game;
 
-    secondPlayerJoined = secondPlayer && !game.opponent;
+    const secondPlayerJoined = secondPlayer && !game.opponent;
     if (secondPlayerJoined) {
       gameUpdated.state = "playing";
       gameUpdated.opponent = secondPlayer;
@@ -83,25 +82,22 @@ export default class Game extends Component {
   }
 
   timer() {
-    let gameToken = this.props.match.params.gameToken;
+    const gameToken = this.props.match.params.gameToken;
     let [games, gameIndex] = this.storage.getActive(gameToken);
-
     games[gameIndex].duration += 1000;
     this.storage.update(games);
-    console.log(games[gameIndex].duration);
   }
 
   selectSquare(row, column) {
-    let gameToken = this.props.match.params.gameToken;
-    let secondPlayer = this.props.match.params.secondPlayer;
+    const gameToken = this.props.match.params.gameToken;
+    const secondPlayer = this.props.match.params.secondPlayer;
     let game = this.state.game;
-    let playerCanMakeAMove = !game.field[row][column] &&
-                             !this.state.turnChanged  &&
-                             !game.result             &&
-                              game.opponent;
-    let gameStart = game.duration === 0   &&
-                    game.turn === "owner" &&
-                    !secondPlayer;
+    const playerCanMakeAMove = !game.field[row][column] &&
+                               !this.state.turnChanged  &&
+                                game.opponent;
+    const gameStart = game.duration === 0      &&
+                      game.state === "playing" &&
+                      !secondPlayer;
 
     if (secondPlayer === "observer") {
       return false;
@@ -123,10 +119,10 @@ export default class Game extends Component {
   }
 
   playerMove(row, column, game) {
-    let turn = this.state.game.turn;
-    let secondPlayer = this.props.match.params.secondPlayer;
-    let firstPlayerMove = !secondPlayer && turn === "owner";
-    let secondPlayerMove = secondPlayer && turn === "opponent";
+    const turn = this.state.game.turn;
+    const secondPlayer = this.props.match.params.secondPlayer;
+    const firstPlayerMove = !secondPlayer && turn === "owner";
+    const secondPlayerMove = secondPlayer && turn === "opponent";
 
     if (firstPlayerMove) {
       this.setState({turnChanged: true});
@@ -141,13 +137,15 @@ export default class Game extends Component {
   }
 
   checkEndGame(game) {
-    let winner = this.endGame.getWinner(game.field);
-    let noWays = this.endGame.checkNoWays(game.field);
+    const winner = this.endGame.getWinner(game.field);
+    const noWays = this.endGame.checkNoWays(game.field);
+    const winnerOwner = winner === 1;
+    const winnerOpponent = winner === 2;
 
-    if (winner === 1) {
+    if (winnerOwner) {
       game.result = "owner";
     }
-    else if (winner === 2) {
+    else if (winnerOpponent) {
       game.result = "opponent";
     }
     else if (noWays) {
@@ -161,8 +159,8 @@ export default class Game extends Component {
   }
 
   exitGame(game) {
-    let gameToken = this.props.match.params.gameToken;
-    let secondPlayer = this.props.match.params.secondPlayer;
+    const gameToken = this.props.match.params.gameToken;
+    const secondPlayer = this.props.match.params.secondPlayer;
     let gameUpdated = game;
 
     if (secondPlayer === "observer") {
@@ -171,7 +169,7 @@ export default class Game extends Component {
       return false;
     }
 
-    if (gameUpdated.turn === "opponent") {
+    if (secondPlayer) {
       gameUpdated.result = "owner";
     }
     else {
@@ -193,9 +191,9 @@ export default class Game extends Component {
   }
 
   render() {
-    let game = this.state.game;
-    let field = this.state.game.field;
-    let ownerTurn = game.turn === "owner";
+    const game = this.state.game;
+    const field = this.state.game.field;
+    const ownerTurn = game.turn === "owner";
 
     if (this.state.redirect) {
       return <Redirect to="/" />
