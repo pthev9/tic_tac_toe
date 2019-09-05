@@ -14,7 +14,7 @@ export default class List extends Component {
               onClick={() => this.props.selectGame(game)}
             >
               <Players
-                winner={game.result}
+                result={game.result}
                 owner={game.owner}
                 opponent={game.opponent}
               />

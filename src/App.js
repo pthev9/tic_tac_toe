@@ -11,7 +11,7 @@ export default class App extends Component {
       <Router>
         <Header/>
         <Route exact path="/" component={Main} />
-        <Route path="/game/:gameToken/:secondplayer?" component={Game}/>
+        <Route path="/game/:gameToken/:secondPlayer?" component={Game}/>
       </Router>
     )
   }
