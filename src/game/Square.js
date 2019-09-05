@@ -6,16 +6,17 @@ class Square extends Component {
       return "game-square cross"}
     if (square === 2) {
       return "game-square null"}
-    else return "game-square";
+    else
+      return "game-square";
   }
 
   render() {
     return (
       (this.props.row).map((square, index) =>
-        <div
-          key={index}
-          className={this.getSquareFilling(square)}
-          onClick={() => this.props.selectSquare(this.props.rowIndex, index)}
+        <div key={index}
+             className={this.getSquareFilling(square)}
+             onClick={() =>
+               this.props.selectSquare(this.props.rowIndex, index)}
         >
         </div>
       )
