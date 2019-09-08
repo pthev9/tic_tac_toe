@@ -13,10 +13,11 @@ class Square extends Component {
   render() {
     return (
       (this.props.row).map((square, index) =>
-        <div key={index}
-             className={this.getSquareFilling(square)}
-             onClick={() =>
-               this.props.selectSquare(this.props.rowIndex, index)}
+        <div
+          key      ={index}
+          className={this.getSquareFilling(square)}
+          onClick  ={() =>
+            this.props.selectSquare(this.props.rowIndex, index)}
         >
         </div>
       )

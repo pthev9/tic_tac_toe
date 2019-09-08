@@ -30,7 +30,7 @@ export default class Main extends Component {
         duration:     0,
         result:       "",
         state:        "ready",
-        turn:         "owner",
+        turn:         1,
         field: [
           [0, 0, 0],
           [0, 0, 0],

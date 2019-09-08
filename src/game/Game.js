@@ -5,7 +5,6 @@ import Square from "./Square";
 import ExitButton from "./ExitButton";
 import Timer from ".././common/Timer";
 import {Redirect} from "react-router-dom";
-
 import "./game.css";
 
 export default class Game extends Component {
@@ -29,7 +28,6 @@ export default class Game extends Component {
     this.endGame = new EndGame();
     this.timer = this.timer.bind(this);
     this.gameDataRefresh = this.gameDataRefresh.bind(this);
-    this.selectSquare = this.selectSquare.bind(this);
   }
 
   componentDidMount() {
@@ -39,10 +37,10 @@ export default class Game extends Component {
   gameDataRefresh() {
     let games, gameIndex, game;
     let gameUpdated;
-    const gameToken = this.props.match.params.gameToken;
-    const secondPlayer = this.props.match.params.secondPlayer;
+    let gameToken = this.props.match.params.gameToken;
+    let secondPlayer = this.props.match.params.secondPlayer;
 
-    if (this.state.game.state === "done") {
+    if (this.state.game.state === STATE_DONE) {
       this.gameEndMessage();
       clearInterval(this.refreshGame);
       this.setState({redirect: true});
@@ -52,9 +50,9 @@ export default class Game extends Component {
     [games, gameIndex, game] = this.storage.getActive(gameToken);
     gameUpdated = game;
 
-    const secondPlayerJoined = secondPlayer && !game.opponent;
+    let secondPlayerJoined = secondPlayer && !game.opponent;
     if (secondPlayerJoined) {
-      gameUpdated.state = "playing";
+      gameUpdated.state = STATE_PLAYING;
       gameUpdated.opponent = secondPlayer;
     }
 
@@ -67,13 +65,13 @@ export default class Game extends Component {
     let game = this.state.game;
 
     switch(game.result) {
-      case "owner":
+      case RESULT_WINNER_OWNER:
         alert(game.owner + " is Winner!");
         break;
-      case "opponent":
+      case RESULT_WINNER_OPPONENT:
         alert(game.opponent + " is Winner!");
         break;
-      case "draw":
+      case RESULT_DRAW:
         alert("Draw!");
         break;
       default:
@@ -82,24 +80,24 @@ export default class Game extends Component {
   }
 
   timer() {
-    const gameToken = this.props.match.params.gameToken;
+    let gameToken = this.props.match.params.gameToken;
     let [games, gameIndex] = this.storage.getActive(gameToken);
     games[gameIndex].duration += 1000;
     this.storage.update(games);
   }
 
   selectSquare(row, column) {
-    const gameToken = this.props.match.params.gameToken;
-    const secondPlayer = this.props.match.params.secondPlayer;
+    let gameToken = this.props.match.params.gameToken;
+    let secondPlayer = this.props.match.params.secondPlayer;
     let game = this.state.game;
-    const playerCanMakeAMove = !game.field[row][column] &&
+    let playerCanMakeAMove = !game.field[row][column] &&
                                !this.state.turnChanged  &&
                                 game.opponent;
-    const gameStart = game.duration === 0      &&
-                      game.state === "playing" &&
+    let gameStart = game.duration === 0      &&
+                      game.state === STATE_PLAYING &&
                       !secondPlayer;
 
-    if (secondPlayer === "observer") {
+    if (secondPlayer === OBSERVER) {
       return false;
     }
 
@@ -119,63 +117,61 @@ export default class Game extends Component {
   }
 
   playerMove(row, column, game) {
-    const turn = this.state.game.turn;
-    const secondPlayer = this.props.match.params.secondPlayer;
-    const firstPlayerMove = !secondPlayer && turn === "owner";
-    const secondPlayerMove = secondPlayer && turn === "opponent";
+    let turn = this.state.game.turn;
+    let secondPlayer = this.props.match.params.secondPlayer;
+    let firstPlayerMove = !secondPlayer && turn === MOVE_OWNER;
+    let secondPlayerMove = secondPlayer && turn === MOVE_OPPONENT;
 
     if (firstPlayerMove) {
       this.setState({turnChanged: true});
-      game.field[row][column] = 1;
-      game.turn = "opponent";
+      game.field[row][column] = MOVE_OWNER;
+      game.turn = MOVE_OPPONENT;
     }
     if (secondPlayerMove) {
       this.setState({turnChanged: true});
-      game.field[row][column] = 2;
-      game.turn = "owner";
+      game.field[row][column] = MOVE_OPPONENT;
+      game.turn = MOVE_OWNER;
     }
   }
 
   checkEndGame(game) {
-    const winner = this.endGame.getWinner(game.field);
-    const noWays = this.endGame.checkNoWays(game.field);
-    const winnerOwner = winner === 1;
-    const winnerOpponent = winner === 2;
+    let winnerMarker = this.endGame.getWinner(game.field);
+    let noWays = this.endGame.checkNoWays(game.field);
 
-    if (winnerOwner) {
-      game.result = "owner";
+    if (winnerMarker === MOVE_OWNER) {
+      game.result = RESULT_WINNER_OWNER;
     }
-    else if (winnerOpponent) {
-      game.result = "opponent";
+    else if (winnerMarker === MOVE_OPPONENT) {
+      game.result = RESULT_WINNER_OPPONENT;
     }
     else if (noWays) {
-      game.result = "draw";
+      game.result = RESULT_DRAW;
     }
 
-    if (winner || noWays) {
-      game.state = "done";
+    if (winnerMarker || noWays) {
+      game.state = STATE_DONE;
       clearInterval(this.state.timeCounter);
     }
   }
 
   exitGame(game) {
-    const gameToken = this.props.match.params.gameToken;
-    const secondPlayer = this.props.match.params.secondPlayer;
+    let gameToken = this.props.match.params.gameToken;
+    let secondPlayer = this.props.match.params.secondPlayer;
     let gameUpdated = game;
 
-    if (secondPlayer === "observer") {
+    if (secondPlayer === OBSERVER) {
       clearInterval(this.refreshGame);
       this.setState({redirect: true});
       return false;
     }
 
     if (secondPlayer) {
-      gameUpdated.result = "owner";
+      gameUpdated.result = RESULT_WINNER_OWNER;
     }
     else {
-      gameUpdated.result = "opponent";
+      gameUpdated.result = RESULT_WINNER_OPPONENT;
     }
-    gameUpdated.state = "done";
+    gameUpdated.state = STATE_DONE;
 
     let [games, gameIndex] = this.storage.getActive(gameToken)
     games[gameIndex] = gameUpdated;
@@ -191,9 +187,9 @@ export default class Game extends Component {
   }
 
   render() {
-    const game = this.state.game;
-    const field = this.state.game.field;
-    const ownerTurn = game.turn === "owner";
+    let game = this.state.game;
+    let field = this.state.game.field;
+    let ownerMove = game.turn === MOVE_OWNER;
 
     if (this.state.redirect) {
       return <Redirect to="/" />
@@ -201,33 +197,45 @@ export default class Game extends Component {
 
     return (
       <div>
-        <span className={`player-first ${ownerTurn ? "move" : ""}`}>
+        <span className={`player-first ${ownerMove ? "move" : ""} `}>
           {game.owner} X
         </span>
-        <span className={`player-second ${!ownerTurn ? "move" : ""}`}>
+        <span className={`player-second ${!ownerMove ? "move" : ""} `}>
           {game.opponent} O
         </span>
 
         <div className="field-block">
           <div className="game-field">
             {field.map((row, index) =>(
-              <Square key         ={index}
-                      row         ={row}
-                      rowIndex    ={index}
-                      selectSquare={this.selectSquare.bind(this)}
+              <Square
+                key         ={index}
+                row         ={row}
+                rowIndex    ={index}
+                selectSquare={this.selectSquare.bind(this)}
               />
             ))}
           </div>
         </div>
 
-        <Timer className="timer-game"
-               duration={game.duration}
+        <Timer
+          className="timer-game"
+          duration={game.duration}
         />
-        <ExitButton secondPlayer={this.props.match.params.secondPlayer}
-                    gameData={game}
-                    exitGame={this.exitGame.bind(this)}
+        <ExitButton
+          secondPlayer={this.props.match.params.secondPlayer}
+          gameData={game}
+          exitGame={this.exitGame.bind(this)}
         />
       </div>
     )
   }
 }
+
+const RESULT_WINNER_OWNER    = "owner";
+const RESULT_WINNER_OPPONENT = "opponent";
+const RESULT_DRAW            = "draw";
+const STATE_PLAYING = "playing";
+const STATE_DONE    = "done";
+const MOVE_OWNER    = 1;
+const MOVE_OPPONENT = 2;
+const OBSERVER = "observer";
