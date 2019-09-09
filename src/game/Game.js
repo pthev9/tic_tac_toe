@@ -91,11 +91,11 @@ export default class Game extends Component {
     let secondPlayer = this.props.match.params.secondPlayer;
     let game = this.state.game;
     let playerCanMakeAMove = !game.field[row][column] &&
-                               !this.state.turnChanged  &&
-                                game.opponent;
-    let gameStart = game.duration === 0      &&
-                      game.state === STATE_PLAYING &&
-                      !secondPlayer;
+                             !this.state.turnChanged  &&
+                             game.opponent;
+    let gameStart = game.duration === 0          &&
+                    game.state === STATE_PLAYING &&
+                    !secondPlayer;
 
     if (secondPlayer === OBSERVER) {
       return false;
@@ -135,20 +135,20 @@ export default class Game extends Component {
   }
 
   checkEndGame(game) {
-    let winnerMarker = this.endGame.getWinner(game.field);
+    let winner = this.endGame.getWinner(game.field);
     let noWays = this.endGame.checkNoWays(game.field);
 
-    if (winnerMarker === MOVE_OWNER) {
+    if (winner === MOVE_OWNER) {
       game.result = RESULT_WINNER_OWNER;
     }
-    else if (winnerMarker === MOVE_OPPONENT) {
+    else if (winner === MOVE_OPPONENT) {
       game.result = RESULT_WINNER_OPPONENT;
     }
     else if (noWays) {
       game.result = RESULT_DRAW;
     }
 
-    if (winnerMarker || noWays) {
+    if (winner || noWays) {
       game.state = STATE_DONE;
       clearInterval(this.state.timeCounter);
     }
