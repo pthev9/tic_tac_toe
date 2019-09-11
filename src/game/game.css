@@ -1,36 +1,50 @@
-.field-block {
-  margin-top: 20px;
-  display: flex;
-}
-
-.game-field {
-  margin: auto;
-  width: 50%;
-}
-
-.game-square {
-  float:left;
-  position: relative;
-  width: 30%;
-  padding-bottom : 30%;
-  margin: 1.66%;
-  background-color: lightgrey;
+.players-container {
+  margin: 20px;
 }
 
 .player-first {
-  margin-left: 20px;
-  text-align: left;
-  float: left;
 }
 
 .player-second {
-  margin-right: 20px;
   text-align: right;
   float: right;
 }
 
 .move {
   text-decoration: underline;
+}
+
+.field-container {
+  margin-top: 30px;
+
+  width: 60%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.game-field {
+  /* margin: auto;
+  width: 60%; */
+
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  height: 80px;
+  margin-top: 20px;
+}
+
+.game-square {
+  /* float:left;
+  position: relative;
+  width: 30%;
+  padding-bottom : 30%;
+  margin: 1.66%;
+  background-color: lightgrey; */
+
+  width: 40%;
+  height: 100%;
+  background-color: lightgrey;
+  margin: 1.66%;
 }
 
 .cross{
@@ -54,7 +68,7 @@
 
 .exit-button {
   display: block;
-  margin-top: 10px;
+  margin-top: 50px;
   width: 20%;
   margin-left: auto;
   margin-right: auto;

@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Redirect} from "react-router-dom";
 import LocalStorage from ".././services/LocalStorage";
 import List from "./List";
+import DataInput from "./DataInput";
 import "./main.css";
 
 export default class Main extends Component {
@@ -9,6 +10,8 @@ export default class Main extends Component {
     super()
     this.state = {
       games: [],
+      username: "",
+      size: 3,
       redirect: false,
       path: ""
     }
@@ -22,21 +25,22 @@ export default class Main extends Component {
              date.getMinutes() + "" +
              date.getSeconds();
       let gameToken = this.state.username.replace(/\s+/g, "") + date;
+
+      let field = new Array(parseInt(this.state.size));
+        for (let i = 0; i < field.length; i++)
+          field[i] = Array(parseInt(this.state.size)).fill(0);
       let newGame = {
-        gameToken:    gameToken,
-        owner:        this.state.username,
-        opponent:     "",
-        size:         3,
-        duration:     0,
-        result:       "",
-        state:        "ready",
-        turn:         1,
-        field: [
-          [0, 0, 0],
-          [0, 0, 0],
-          [0, 0, 0]
-        ]
+        gameToken: gameToken,
+        owner:     this.state.username,
+        opponent:  "",
+        size:      parseInt(this.state.size),
+        duration:  0,
+        result:    "",
+        state:     "ready",
+        turn:      1,
+        field:     field
       };
+      console.log(field);
       this.setState({path: gameToken, redirect: true});
       let games = this.storage.getAll();
       this.storage.pushNew(games, newGame);
@@ -86,6 +90,14 @@ export default class Main extends Component {
     else alert("Enter name");
   }
 
+  playerNameChange(event) {
+    this.setState({username: event.target.value});
+  }
+
+  fieldSizeChange(event) {
+    this.setState({size: event.target.value});
+  }
+
   render() {
     let games = this.state.games;
 
@@ -97,32 +109,22 @@ export default class Main extends Component {
 
     return (
       <div>
-        <div className="input_block">
-          <input
-            className="input_name"
-            type="text"
-            placeholder="Enter name"
-            onChange={(event) => this.setState({username: event.target.value})}
+        {games && (
+          <List
+            gamesList={this.state.games}
+            selectGame={this.selectGame.bind(this)}
           />
+        )}
 
-          <button
-            className="input_button"
-            onClick={this.createNewGame.bind(this)}
-          >
-            Create new game
-          </button>
+        {!games && (
+          <h1> No games </h1>
+        )}
 
-          {games && (
-            <List
-              gamesList={this.state.games}
-              selectGame={this.selectGame.bind(this)}
-            />
-          )}
-
-          {!games && (
-            <h1> No games </h1>
-          )}
-        </div>
+        <DataInput
+          playerNameChange={this.playerNameChange.bind(this)}
+          fieldSizeChange ={this.fieldSizeChange.bind(this)}
+          createNewGame   ={this.createNewGame.bind(this)}
+        />
       </div>
     )
   }

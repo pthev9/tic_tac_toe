@@ -197,30 +197,33 @@ export default class Game extends Component {
 
     return (
       <div>
-        <span className={`player-first ${ownerMove ? "move" : ""} `}>
-          {game.owner} X
-        </span>
-        <span className={`player-second ${!ownerMove ? "move" : ""} `}>
-          {game.opponent} O
-        </span>
+        <div className="players-container">
+          <span className={`player-first ${ownerMove ? "move" : ""} `}>
+            {game.owner} X
+          </span>
+          <span className={`player-second ${!ownerMove ? "move" : ""} `}>
+            {game.opponent} O
+          </span>
+        </div>
 
-        <div className="field-block">
-          <div className="game-field">
-            {field.map((row, index) =>(
+        <div className="field-container">
+          {field.map((row, index) =>(
+            <div className="game-field">
               <Square
                 key         ={index}
                 row         ={row}
                 rowIndex    ={index}
                 selectSquare={this.selectSquare.bind(this)}
               />
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
 
         <Timer
           className="timer-game"
           duration={game.duration}
         />
+        
         <ExitButton
           secondPlayer={this.props.match.params.secondPlayer}
           gameData={game}

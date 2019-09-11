@@ -38,3 +38,16 @@
   color: white;
   float: right;
 }
+
+.input_container {
+  padding-top: 20px;
+  margin: auto;
+  width: 80%;
+}
+
+.input_button {
+  border-radius: 15px;
+  background-color: skyblue;
+  color: white;
+  float: right;
+}

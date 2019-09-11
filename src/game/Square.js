@@ -19,6 +19,7 @@ class Square extends Component {
           onClick  ={() =>
             this.props.selectSquare(this.props.rowIndex, index)}
         >
+          {index}
         </div>
       )
     )
