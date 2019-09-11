@@ -135,8 +135,8 @@ export default class Game extends Component {
   }
 
   checkEndGame(game) {
-    let winner = this.endGame.getWinner(game.field);
-    let noWays = this.endGame.checkNoWays(game.field);
+    let winner = this.endGame.getWinner(game.field, game.size);
+    let noWays = this.endGame.checkNoWays(game.field, game.size);
 
     if (winner === MOVE_OWNER) {
       game.result = RESULT_WINNER_OWNER;
@@ -208,9 +208,8 @@ export default class Game extends Component {
 
         <div className="field-container">
           {field.map((row, index) =>(
-            <div className="game-field">
+            <div key={index} className="game-field">
               <Square
-                key         ={index}
                 row         ={row}
                 rowIndex    ={index}
                 selectSquare={this.selectSquare.bind(this)}
@@ -223,7 +222,7 @@ export default class Game extends Component {
           className="timer-game"
           duration={game.duration}
         />
-        
+
         <ExitButton
           secondPlayer={this.props.match.params.secondPlayer}
           gameData={game}

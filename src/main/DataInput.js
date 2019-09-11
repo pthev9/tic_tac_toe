@@ -12,9 +12,8 @@ export default function DataInput(props) {
       <span> Field: </span>
       <input
         type="number"
-  
         min ="3"
-        max ="10"
+        max ="5"
         defaultValue="3"
         onClick={(event) => props.fieldSizeChange(event)}
       />

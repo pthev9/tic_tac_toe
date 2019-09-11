@@ -45,6 +45,9 @@
   width: 80%;
 }
 
+.input_name {
+  margin-right: 30px;
+}
 .input_button {
   border-radius: 15px;
   background-color: skyblue;
